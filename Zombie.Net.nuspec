@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>Zombie.Net</id>
+        <version>1.0.0</version>
+        <authors>Jeremy Beavon</authors>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>A .NET API for zombie using Edge.js</description>
+        <dependencies />
+    </metadata>
+    <files>
+        <file src="Zombie.Net\bin\Release\Zombie.Net.dll" target="lib\net45\Zombie.Net.dll" />
+        <file src="NuGet\install.bat" target="tools\install.bat" />
+        <file src="NuGet\install.ps1" target="tools\install.ps1" />
+    </files>
+</package>
