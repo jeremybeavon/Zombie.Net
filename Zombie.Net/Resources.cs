@@ -26,12 +26,12 @@ namespace Zombie.Net
                         error = error == null ? null : error.ToDynamic(),
                         response = response == null ? null : response.ToDynamic()
                     };
-                    ((Func<object, Task<object>>)input.next)(nextInput).Wait();
+                    ((Func<object, Task<object>>)input.next)(nextInput);
                 };
                 handler(new Request(input.request), requestCallback);
                 return Task.FromResult<object>(null);
             };
-            ExecuteJavascriptFunction(resources.addRequestHander, requestHandler);
+            ExecuteJavascriptFunction(resources.addRequestHandler, requestHandler);
         }
 
         public void AddResponseHandler(Action<Request, Response, Action<Error>> handler)

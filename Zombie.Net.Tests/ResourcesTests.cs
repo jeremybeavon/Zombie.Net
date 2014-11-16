@@ -18,7 +18,8 @@ namespace Zombie.Net.Tests
                 next(null, null);
             };
             browser.Resources.AddRequestHandler(handler);
-            browser.VisitTestPage();
+            browser.Visit(new Uri("http://localhost:51802/Account/Login"));
+            //browser.VisitTestPage();
             callCount.Should().BeGreaterThan(0);
         }
     }

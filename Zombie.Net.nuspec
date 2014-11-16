@@ -2,11 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>Zombie.Net</id>
-        <version>1.0.0</version>
+        <version>0.0.1</version>
         <authors>Jeremy Beavon</authors>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>A .NET API for zombie using Edge.js</description>
-        <dependencies />
+        <dependencies>
+            <dependency id="EdgeJs.NativeModuleSupport" version="0.9.2.1" />
+        </dependencies>
     </metadata>
     <files>
         <file src="Zombie.Net\bin\Release\Zombie.Net.dll" target="lib\net45\Zombie.Net.dll" />

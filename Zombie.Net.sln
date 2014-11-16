@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2013 for Web
-VisualStudioVersion = 12.0.30723.0
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zombie.Net", "Zombie.Net\Zombie.Net.csproj", "{93CF4E6C-9A5A-4FA2-8642-8913EBA6F42B}"
 EndProject
@@ -11,6 +11,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{CED258
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zombie.Net.Tests", "Zombie.Net.Tests\Zombie.Net.Tests.csproj", "{AFF1032E-91A0-4DD3-8EEE-3687180DCA4C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zombie.Net.PortlessWebHost", "Zombie.Net.PortlessWebHost\Zombie.Net.PortlessWebHost.csproj", "{22F4CD13-4E36-42F9-805C-AEE419865375}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zombie.Net.TestWebSite", "Zombie.Net.TestWebSite\Zombie.Net.TestWebSite.csproj", "{498ED0A5-A02C-42C8-8D72-FFA7EAF209A5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +30,14 @@ Global
 		{AFF1032E-91A0-4DD3-8EEE-3687180DCA4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AFF1032E-91A0-4DD3-8EEE-3687180DCA4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFF1032E-91A0-4DD3-8EEE-3687180DCA4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22F4CD13-4E36-42F9-805C-AEE419865375}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22F4CD13-4E36-42F9-805C-AEE419865375}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22F4CD13-4E36-42F9-805C-AEE419865375}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22F4CD13-4E36-42F9-805C-AEE419865375}.Release|Any CPU.Build.0 = Release|Any CPU
+		{498ED0A5-A02C-42C8-8D72-FFA7EAF209A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{498ED0A5-A02C-42C8-8D72-FFA7EAF209A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{498ED0A5-A02C-42C8-8D72-FFA7EAF209A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{498ED0A5-A02C-42C8-8D72-FFA7EAF209A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

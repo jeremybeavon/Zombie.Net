@@ -105,6 +105,7 @@ var getResources = function (currentResources) {
                 data({
                     request: request,
                     next: function (nextData, nextCallback) {
+                        nextCallback(null, null);
                         if (nextData.response) {
                             next(nextData.error, nextData.response);
                         } else if (nextData.error) {
@@ -112,8 +113,6 @@ var getResources = function (currentResources) {
                         } else {
                             next();
                         }
-
-                        nextCallback(null, null);
                     }
                 }, null)
             });

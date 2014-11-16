@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>Zombie.Net.PortlessWebHost</id>
+        <version>0.0.1</version>
+        <authors>Jeremy Beavon</authors>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>A .NET API for zombie using Edge.js connected to PortlessWebHost which host ASP.Net sites.</description>
+        <dependencies>
+            <dependency id="Zombie.Net" version="0.0.1" />
+            <dependency id="PortlessWebHost" version="1.0.5" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="Zombie.Net.PortlessWebHost\bin\Release\Zombie.Net.PortlessWebHost.dll" target="lib\net45\Zombie.Net.PortlessWebHost.dll" />
+    </files>
+</package>
