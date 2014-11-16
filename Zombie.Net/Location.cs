@@ -20,71 +20,71 @@ namespace Zombie.Net
             Url = url;
         }
 
-        public string Hash
+        public async Task<string> GetHashAsync()
         {
-            get { return (string)ExecuteJavascriptFunction(location.hash, null); }
+            return (string)(await ExecuteJavascriptFunction(location.hash, null));
         }
 
-        public string Host
+        public async Task<string> GetHostAsync()
         {
-            get { return (string)ExecuteJavascriptFunction(location.host, null); }
+            return (string)(await ExecuteJavascriptFunction(location.host, null));
         }
 
-        public string HostName
+        public async Task<string> GetHostNameAsync()
         {
-            get { return (string)ExecuteJavascriptFunction(location.hostname, null); }
+            return (string)(await ExecuteJavascriptFunction(location.hostname, null));
         }
 
-        public string Href
+        public async Task<string> GetHrefAsync()
         {
-            get { return (string)ExecuteJavascriptFunction(location.href, null); }
+            return (string)(await ExecuteJavascriptFunction(location.href, null));
         }
 
-        public string Origin
+        public async Task<string> GetOriginAsync()
         {
-            get { return (string)ExecuteJavascriptFunction(location.origin, null); }
+            return (string)(await ExecuteJavascriptFunction(location.origin, null));
         }
 
-        public string PathName
+        public async Task<string> GetPathNameAsync()
         {
-            get { return (string)ExecuteJavascriptFunction(location.pathname, null); }
+            return (string)(await ExecuteJavascriptFunction(location.pathname, null));
         }
 
-        public string Port
+        public async Task<string> GetPortAsync()
         {
-            get { return (string)ExecuteJavascriptFunction(location.port, null); }
+            return (string)(await ExecuteJavascriptFunction(location.port, null));
         }
 
-        public string Protocol
+        public async Task<string> GetProtocolAsync()
         {
-            get { return (string)ExecuteJavascriptFunction(location.protocol, null); }
+            return (string)(await ExecuteJavascriptFunction(location.protocol, null));
         }
 
-        public string Search
+        public async Task<string> GetSearchAsync()
         {
-            get { return (string)ExecuteJavascriptFunction(location.search, null); }
+            return (string)(await ExecuteJavascriptFunction(location.search, null));
         }
 
         internal Uri Url { get; private set; }
 
-        public void Assign(Uri url)
+        public Task AssignAsync(Uri url)
         {
-            ExecuteJavascriptFunction(location.assign, url.AbsoluteUri);
+            return ExecuteJavascriptFunction(location.assign, url.AbsoluteUri);
         }
 
-        public void Reload()
+        public Task ReloadAsync()
         {
-            ExecuteJavascriptFunction(location.reload, null);
+            return ExecuteJavascriptFunction(location.reload, null);
         }
 
-        public void Reload(bool forceGet)
+        public Task Reload(bool forceGet)
         {
-            ExecuteJavascriptFunction(location.reload, null);
+            return ExecuteJavascriptFunction(location.reload, null);
         }
 
-        public void Replace(Uri url)
+        public Task Replace(Uri url)
         {
-            ExecuteJavascriptFunction(location.replace, url.AbsoluteUri);
+            return ExecuteJavascriptFunction(location.replace, url.AbsoluteUri);
         }
 
         public static implicit operator Location(Uri url)
@@ -92,9 +92,9 @@ namespace Zombie.Net
             return new Location(url);
         }
 
-        private static object ExecuteJavascriptFunction(object func, object input)
+        private static Task<object> ExecuteJavascriptFunction(object func, object input)
         {
-            return Javascript.ExecuteFunction(func, input);
+            return ((Func<object, Task<object>>)func)(input);
         }
     }
 }

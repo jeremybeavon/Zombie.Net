@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -8,17 +9,17 @@ namespace Zombie.Net.Tests
     public sealed class ResourcesTests
     {
         [TestMethod]
-        public void TestAddRequestHander()
+        public async Task TestAddRequestHander()
         {
             Browser browser = Browser.Create();
             int callCount = 0;
-            Action<Request, Action<Error, Response>> handler = (request, next) =>
+            Func<Request, Func<Error, Response, Task>, Task> handler = async (request, next) =>
             {
                 callCount++;
-                next(null, null);
+                await next(null, null);
             };
-            browser.Resources.AddRequestHandler(handler);
-            browser.Visit(new Uri("http://localhost:51802/Account/Login"));
+            await (await browser.GetResourcesAsync()).AddRequestHandlerAsync(handler);
+            await browser.VisitAsync(new Uri("http://localhost:51802/Account/Login"));
             //browser.VisitTestPage();
             callCount.Should().BeGreaterThan(0);
         }

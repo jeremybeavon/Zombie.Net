@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -10,20 +11,21 @@ namespace Zombie.Net.Tests
 
 
         [TestMethod]
-        public void TestOnAlertCallsCallback()
+        public async Task TestOnAlertCallsCallback()
         {
             Browser browser = Browser.Create();
-            browser.VisitTestPage();
-            string html = browser.Html();
-            int statusCode = browser.StatusCode;
+            await browser.VisitTestPage();
+            string html = await browser.HtmlAsync();
+            int statusCode = await browser.GetStatusCodeAsync();
             bool isAlertCallbackCalled = false;
-            Action<string> callback = input => 
+            Func<string, Task> callback = input => 
             {
                 input.Should().Be("test alert message");
                 isAlertCallbackCalled = true;
+                return Task.FromResult<object>(null);
             };
-            browser.OnAlert(callback);
-            browser.PressButton("Display Alert");
+            await browser.OnAlertAsync(callback);
+            await browser.PressButtonAsync("Display Alert");
             isAlertCallbackCalled.Should().BeTrue();
         }
     }

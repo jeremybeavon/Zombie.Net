@@ -15,40 +15,44 @@ namespace Zombie.Net
             this.storage = storage;
         }
 
-        public int Length
+        public async Task<int> GetLengthAsync()
         {
-            get { return (int)ExecuteJavascriptFunction(storage.length, null); }
+            return (int)(await ExecuteJavascriptFunction(storage.length, null));
         }
 
-        public string this[int index]
+        public async Task<string> KeyAsync(int index)
         {
-            get { return (string)ExecuteJavascriptFunction(storage.key, index); }
+            return (string)(await ExecuteJavascriptFunction(storage.key, index));
         }
 
-        public string this[string name]
+        public async Task<string> GetItemAsync(string name)
         {
-            get { return (string)ExecuteJavascriptFunction(storage.getItem, name); }
-            set { ExecuteJavascriptFunction(storage.setItem, new { name, value }); }
+            return (string)(await ExecuteJavascriptFunction(storage.getItem, name));
         }
 
-        public void Clear()
+        public Task SetItemAsync(string name, string value)
         {
-            ExecuteJavascriptFunction(storage.clear, null);
+            return ExecuteJavascriptFunction(storage.setItem, new { name, value });
+        }
+        
+        public Task ClearAsync()
+        {
+            return ExecuteJavascriptFunction(storage.clear, null);
         }
 
-        public void Dump()
+        public Task DumpAsync()
         {
-            ExecuteJavascriptFunction(storage.dump, null);
+            return ExecuteJavascriptFunction(storage.dump, null);
         }
 
-        public void RemoveItem(string name)
+        public Task RemoveItem(string name)
         {
-            ExecuteJavascriptFunction(storage.removeItem, null);
+            return ExecuteJavascriptFunction(storage.removeItem, null);
         }
 
-        private static object ExecuteJavascriptFunction(object func, object input)
+        private static Task<object> ExecuteJavascriptFunction(object func, object input)
         {
-            return Javascript.ExecuteFunction(func, input);
+            return ((Func<object, Task<object>>)func)(input);
         }
     }
 }

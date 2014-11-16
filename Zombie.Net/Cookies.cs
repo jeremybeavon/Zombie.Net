@@ -15,35 +15,40 @@ namespace Zombie.Net
             this.cookies = cookies;
         }
 
-        public string this[string name]
+        public async Task<string> GetAsync(string name)
         {
-            get { return (string)ExecuteJavascriptFunction(cookies.get, name); }
-            set { ExecuteJavascriptFunction(cookies.set, new { name, value }); }
+            return (string)(await ExecuteJavascriptFunction(cookies.get, name));
         }
 
-        public Cookie[] All()
+        public Task SetAsync(string name, string value)
         {
-            return (Cookie[])ExecuteJavascriptFunction(cookies.all, null);
+            return ExecuteJavascriptFunction(cookies.set, new { name, value });
         }
 
-        public void Clear()
+        public async Task<Cookie[]> AllAsync()
         {
-            ExecuteJavascriptFunction(cookies.clear, null);
+            object allCookies = await ExecuteJavascriptFunction(cookies.all, null);
+            return (Cookie[])allCookies;
         }
 
-        public void Dump()
+        public Task ClearAsync()
         {
-            ExecuteJavascriptFunction(cookies.dump, null);
+            return ExecuteJavascriptFunction(cookies.clear, null);
         }
 
-        public void Remove(string name)
+        public Task DumpAsync()
         {
-            ExecuteJavascriptFunction(cookies.remove, name);
+            return ExecuteJavascriptFunction(cookies.dump, null);
+        }
+
+        public Task RemoveAsync(string name)
+        {
+            return ExecuteJavascriptFunction(cookies.remove, name);
         }
         
-        private static object ExecuteJavascriptFunction(object func, object input)
+        private static Task<object> ExecuteJavascriptFunction(object func, object input)
         {
-            return Javascript.ExecuteFunction(func, input);
+            return ((Func<object, Task<object>>)func)(input);
         }
     }
 }

@@ -29,55 +29,59 @@ namespace Zombie.Net
             this.browser = browser;
         }
 
-        public Element Body
+        public async Task<Element> GetBodyAsync()
         {
-            get { return Element.Create(ExecuteJavascriptFunction(browser.body, null)); }
+            return Element.Create(await ExecuteJavascriptFunction(browser.body, null));
         }
 
-        public Document Document
+        public async Task<Document> GetDocumentAsync()
         {
-            get { return Document.Create(ExecuteJavascriptFunction(browser.document, null)); }
+            return Document.Create(await ExecuteJavascriptFunction(browser.document, null));
         }
 
-        public Element Focused
+        public async Task<Element> GetFocusedAsync()
         {
-            get { return Element.Create(ExecuteJavascriptFunction(browser.focused, null)); }
+            return Element.Create(await ExecuteJavascriptFunction(browser.focused, null));
         }
 
-        public History History
+        public async Task<History> GetHistoryAsync()
         {
-            get { return new History(ExecuteJavascriptFunction(browser.history, null)); }
+            return new History(await ExecuteJavascriptFunction(browser.history, null));
         }
 
-        public Location Location
+        public async Task<Location> GetLocationAsync()
         {
-            get { return new Location(ExecuteJavascriptFunction(browser.location, null)); }
-            set { ExecuteJavascriptFunction(browser.setLocation, value.Url); }
+            return new Location(await ExecuteJavascriptFunction(browser.location, null));
         }
 
-        public bool Redirected
+        public Task SetLocationAsync(Location location)
         {
-            get { return (bool)ExecuteJavascriptFunction(browser.redirected, null); }
+            return ExecuteJavascriptFunction(browser.setLocation, location.Url);
         }
 
-        public Resources Resources
+        public async Task<bool> GetRedirectedAsync()
         {
-            get { return new Resources(ExecuteJavascriptFunction(browser.resources, null)); }
+            return (bool)(await ExecuteJavascriptFunction(browser.redirected, null));
         }
 
-        public int StatusCode
+        public async Task<Resources> GetResourcesAsync()
         {
-            get { return (int)ExecuteJavascriptFunction(browser.statusCode, null); }
+            return new Resources(await ExecuteJavascriptFunction(browser.resources, null));
         }
 
-        public bool Success
+        public async Task<int> GetStatusCodeAsync()
         {
-            get { return (bool)ExecuteJavascriptFunction(browser.success, null); }
+            return (int)(await ExecuteJavascriptFunction(browser.statusCode, null));
         }
 
-        public Uri Url
+        public async Task<bool> GetSuccessAsync()
         {
-            get { return new Uri((string)ExecuteJavascriptFunction(browser.url, null)); }
+            return (bool)(await ExecuteJavascriptFunction(browser.success, null));
+        }
+
+        public async Task<Uri> GetUrlAsync()
+        {
+            return new Uri((string)(await ExecuteJavascriptFunction(browser.url, null)));
         }
 
         public static Browser Create()
@@ -85,254 +89,250 @@ namespace Zombie.Net
             return new Browser(CreateBrowser(null));
         }
 
-        public Browser Attach(string selector, string fileName)
+        public Task AttachAsync(string selector, string fileName)
         {
-            ExecuteJavascriptFunction(browser.attach, new { selector, filename = fileName });
-            return this;
+            return ExecuteJavascriptFunction(browser.attach, new { selector, filename = fileName });
         }
 
-        public void Back()
+        public Task BackAsync()
         {
-            ExecuteJavascriptFunction(browser.back, null);
+            return ExecuteJavascriptFunction(browser.back, null);
         }
 
-        public Element Button(string selector)
+        public async Task<Element> GetButtonAsync(string selector)
         {
-            return Element.Create(ExecuteJavascriptFunction(browser.button, selector));
+            return Element.Create(await ExecuteJavascriptFunction(browser.button, selector));
         }
 
-        public Browser Check(string field)
+        public Task CheckAsync(string field)
         {
-            ExecuteJavascriptFunction(browser.check, field);
-            return this;
+            return ExecuteJavascriptFunction(browser.check, field);
         }
 
-        public Browser Choose(string field)
+        public Task ChooseAsync(string field)
         {
-            ExecuteJavascriptFunction(browser.choose, field);
-            return this;
+            return ExecuteJavascriptFunction(browser.choose, field);
         }
 
-        public void Close()
+        public Task CloseAsync()
         {
-            ExecuteJavascriptFunction(browser.close, null);
+            return ExecuteJavascriptFunction(browser.close, null);
         }
 
-        public Cookies Cookies()
+        public async Task<Cookies> CookiesAsync()
         {
-            return new Cookies(ExecuteJavascriptFunction(browser.cookies, null));
+            return new Cookies(await ExecuteJavascriptFunction(browser.cookies, null));
         }
 
-        public Cookies Cookies(string domain)
+        public async Task<Cookies> CookiesAsync(string domain)
         {
-            return new Cookies(ExecuteJavascriptFunction(browser.cookies, new { domain }));
+            return new Cookies(await ExecuteJavascriptFunction(browser.cookies, new { domain }));
         }
 
-        public Cookies Cookies(string domain, string path)
+        public async Task<Cookies> CookiesAsync(string domain, string path)
         {
-            return new Cookies(ExecuteJavascriptFunction(browser.cookies, new { domain, path }));
+            return new Cookies(await ExecuteJavascriptFunction(browser.cookies, new { domain, path }));
         }
 
-        public object Evaluate(string javascriptExpression)
+        public Task<Cookies> CookiesAsync(Uri url)
+        {
+            return CookiesAsync(url.Host, url.LocalPath);
+        }
+
+        public Task<object> EvaluateAsync(string javascriptExpression)
         {
             return ExecuteJavascriptFunction(browser.evaluate, javascriptExpression);
         }
 
-        public Element Field(string selector)
+        public async Task<Element> FieldAsync(string selector)
         {
-            return Element.Create(ExecuteJavascriptFunction(browser.field, selector));
+            return Element.Create(await ExecuteJavascriptFunction(browser.field, selector));
         }
 
-        public Browser Fill(string field, string value)
+        public Task FillAsync(string field, string value)
         {
-            ExecuteJavascriptFunction(browser.fill, new { field, value });
-            return this;
+            return ExecuteJavascriptFunction(browser.fill, new { field, value });
         }
 
-        public Browser Fork()
+        public async Task<Browser> ForkAsync()
         {
-            return new Browser(ExecuteJavascriptFunction(browser.fork, null));
+            return new Browser(await ExecuteJavascriptFunction(browser.fork, null));
         }
 
-        public string Html()
+        public async Task<string> HtmlAsync()
         {
-            return (string)ExecuteJavascriptFunction(browser.html, null);
+            return (string)(await ExecuteJavascriptFunction(browser.html, null));
         }
 
-        public string Html(string selector)
+        public async Task<string> HtmlAsync(string selector)
         {
-            return (string)ExecuteJavascriptFunction(browser.html, new { selector });
+            return (string)(await ExecuteJavascriptFunction(browser.html, new { selector }));
         }
 
-        public void Load(string html)
+        public Task LoadAsync(string html)
         {
-            ExecuteJavascriptFunction(browser.load, html);
+            return ExecuteJavascriptFunction(browser.load, html);
         }
 
-        public void LoadCookies(string text)
+        public Task LoadCookiesAsync(string text)
         {
-            ExecuteJavascriptFunction(browser.loadCookies, null);
+            return ExecuteJavascriptFunction(browser.loadCookies, null);
         }
 
-        public void LoadHistory(string text)
+        public Task LoadHistoryAsync(string text)
         {
-            ExecuteJavascriptFunction(browser.loadHistory, null);
+            return ExecuteJavascriptFunction(browser.loadHistory, null);
         }
 
-        public void LoadStorage(string text)
+        public Task LoadStorageAsync(string text)
         {
-            ExecuteJavascriptFunction(browser.loadStorage, null);
+            return ExecuteJavascriptFunction(browser.loadStorage, null);
         }
 
-        public Storage LocalStorage(string host)
+        public async Task<Storage> LocalStorage(string host)
         {
-            return new Storage(ExecuteJavascriptFunction(browser.localStorage, host));
+            return new Storage(await ExecuteJavascriptFunction(browser.localStorage, host));
         }
 
-        public void OnAlert(Action<string> function)
+        public Task OnAlertAsync(Func<string, Task> function)
         {
-            Func<object, Task<object>> javascriptFunction = input =>
+            Func<object, Task<object>> javascriptFunction = async input =>
             {
-                function((string)input);
+                await function((string)input);
                 return Task.FromResult<object>(null);
             };
-            ExecuteJavascriptFunction(browser.onAlert, javascriptFunction);
+            return ExecuteJavascriptFunction(browser.onAlert, javascriptFunction);
         }
 
-        public void OnConfirm(string question, bool response)
+        public Task OnConfirmAsync(string question, bool response)
         {
-            ExecuteJavascriptFunction(browser.onConfirm, new { question, response });
+            return ExecuteJavascriptFunction(browser.onConfirm, new { question, response });
         }
 
-        public void OnConfirm(Func<string, bool> function)
+        public Task OnConfirmAsync(Func<string, Task<bool>> function)
         {
-            Func<object, Task<object>> confirmFunction = input => Task.FromResult<object>(function((string)input));
-            ExecuteJavascriptFunction(browser.onConfirm, new { confirmFunction });
+            Func<object, Task<object>> confirmFunction = async input => await function((string)input);
+            return ExecuteJavascriptFunction(browser.onConfirm, new { confirmFunction });
         }
 
-        public void OnPrompt(string message, PromptResponse response)
+        public Task OnPromptAsync(string message, PromptResponse response)
         {
-            ExecuteJavascriptFunction(browser.onPrompt, new { message, response = response.Response });
+            return ExecuteJavascriptFunction(browser.onPrompt, new { message, response = response.Response });
         }
 
-        public void OnPrompt(Func<string, PromptResponse> function)
+        public Task OnPromptAsync(Func<string, Task<PromptResponse>> function)
         {
-            Func<object, Task<object>> promptFunction = input =>
+            Func<object, Task<object>> promptFunction = async input =>
             {
-                PromptResponse response = function((string)input);
+                PromptResponse response = await function((string)input);
                 return Task.FromResult(response == null ? null : response.Response);
             };
-            ExecuteJavascriptFunction(browser.onPrompt, new { promptFunction });
+            return ExecuteJavascriptFunction(browser.onPrompt, new { promptFunction });
         }
 
-        public void PressButton(string selector)
+        public Task PressButtonAsync(string selector)
         {
-            ExecuteJavascriptFunction(browser.pressButton, selector);
+            return ExecuteJavascriptFunction(browser.pressButton, selector);
         }
 
-        public bool Prompted(string message)
+        public async Task<bool> PromptedAsync(string message)
         {
-            return (bool)ExecuteJavascriptFunction(browser.prompted, message);
+            return (bool)(await ExecuteJavascriptFunction(browser.prompted, message));
         }
 
-        public Element[] QueryAll(string selector)
+        public Task<Element[]> QueryAllAsync(string selector)
         {
             return null;
         }
 
-        public Element Query(string selector)
+        public async Task<Element> QueryAsync(string selector)
         {
-            return Element.Create(ExecuteJavascriptFunction(browser.query, new { selector }));
+            return Element.Create(await ExecuteJavascriptFunction(browser.query, new { selector }));
         }
 
-        public void Reload()
+        public Task ReloadAsync()
         {
-            ExecuteJavascriptFunction(browser.reload, null);
+            return ExecuteJavascriptFunction(browser.reload, null);
         }
 
-        public string SaveCookies()
+        public async Task<string> SaveCookiesAsync()
         {
-            return (string)ExecuteJavascriptFunction(browser.saveCookies, null);
+            return (string)(await ExecuteJavascriptFunction(browser.saveCookies, null));
         }
 
-        public string SaveHistory()
+        public async Task<string> SaveHistoryAsync()
         {
-            return (string)ExecuteJavascriptFunction(browser.saveHistory, null);
+            return (string)(await ExecuteJavascriptFunction(browser.saveHistory, null));
         }
 
-        public string SaveStorage()
+        public async Task<string> SaveStorageAsync()
         {
-            return (string)ExecuteJavascriptFunction(browser.saveStorage, null);
+            return (string)(await ExecuteJavascriptFunction(browser.saveStorage, null));
         }
 
-        public Browser Select(string field, string value)
+        public Task SelectAsync(string field, string value)
         {
-            ExecuteJavascriptFunction(browser.select, new { field, value });
-            return this;
+            return ExecuteJavascriptFunction(browser.select, new { field, value });
         }
 
-        public Storage SessionStorage(string host)
+        public async Task<Storage> SessionStorageAsync(string host)
         {
-            return new Storage(ExecuteJavascriptFunction(browser.sessionStorage, host));
+            return new Storage(await ExecuteJavascriptFunction(browser.sessionStorage, host));
         }
 
-        public string Text(string selector)
+        public async Task<string> TextAsync(string selector)
         {
-            return (string)ExecuteJavascriptFunction(browser.text, new { selector });
+            return (string)(await ExecuteJavascriptFunction(browser.text, new { selector }));
         }
 
-        public Browser Uncheck(string field)
+        public Task UncheckAsync(string field)
         {
-            ExecuteJavascriptFunction(browser.uncheck, field);
-            return this;
+            return ExecuteJavascriptFunction(browser.uncheck, field);
         }
 
-        public Browser Unselect(string field, string value)
+        public Task UnselectAsync(string field, string value)
         {
-            ExecuteJavascriptFunction(browser.unselect, new { field, value });
-            return this;
+            return ExecuteJavascriptFunction(browser.unselect, new { field, value });
         }
 
-        public Browser Visit(Uri url)
+        public Task VisitAsync(Uri url)
         {
             var input = new
             {
                 url = url.AbsoluteUri
             };
-            ExecuteJavascriptFunction(browser.visit, input);
-            return this;
+            return ExecuteJavascriptFunction(browser.visit, input);
         }
 
-        public Browser Visit(Uri url, BrowserOptions options)
+        public Task VisitAsync(Uri url, BrowserOptions options)
         {
             var input = new
             {
                 url = url.AbsoluteUri,
                 options = options.ToJavascriptOptions()
             };
-            ExecuteJavascriptFunction(browser.visit, input);
-            return this;
+            return ExecuteJavascriptFunction(browser.visit, input);
         }
 
-        public void Wait()
+        public Task WaitAsync()
         {
-            ExecuteJavascriptFunction(browser.wait, null);
+            return ExecuteJavascriptFunction(browser.wait, null);
         }
 
-        public void Wait(TimeSpan duration)
+        public Task WaitAsync(TimeSpan duration)
         {
-            ExecuteJavascriptFunction(browser.wait, new { duration });
+            return ExecuteJavascriptFunction(browser.wait, new { duration });
         }
 
-        public void Wait(Func<Window, bool> function)
+        public void WaitAsync(Func<Window, Task<bool>> function)
         {
-            Func<object, Task<object>> done = input => Task.FromResult<object>(function((Window)input));
+            Func<object, Task<object>> done = async input => await function((Window)input);
             ExecuteJavascriptFunction(browser.wait, new { done });
         }
 
-        private static object ExecuteJavascriptFunction(object func, object input)
+        private static Task<object> ExecuteJavascriptFunction(object func, object input)
         {
-            return Javascript.ExecuteFunction(func, input);
+            return ((Func<object, Task<object>>)func)(input);
         }
 
         private static object CreateBrowser(object options)
@@ -348,7 +348,9 @@ namespace Zombie.Net
                 }
             }
 
-            return Javascript.ExecuteFunction(browserFactoryFunc, options);
+            Task<object> createTask = browserFactoryFunc(options);
+            createTask.Wait();
+            return createTask.Result;
         }
     }
 }

@@ -15,24 +15,24 @@ namespace Zombie.Net
             this.history = history;
         }
 
-        public void Back()
+        public Task BackAsync()
         {
-            ExecuteJavascriptFunction(history.back, null);
+            return ExecuteJavascriptFunction(history.back, null);
         }
 
-        public void Forward()
+        public Task ForwardAsync()
         {
-            ExecuteJavascriptFunction(history.forward, null);
+            return ExecuteJavascriptFunction(history.forward, null);
         }
 
-        public void Go(int number)
+        public Task GoAsync(int number)
         {
-            ExecuteJavascriptFunction(history.go, number);
+            return ExecuteJavascriptFunction(history.go, number);
         }
 
-        private static object ExecuteJavascriptFunction(object func, object input)
+        private static Task<object> ExecuteJavascriptFunction(object func, object input)
         {
-            return Javascript.ExecuteFunction(func, input);
+            return ((Func<object, Task<object>>)func)(input);
         }
     }
 }

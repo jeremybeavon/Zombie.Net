@@ -70,7 +70,6 @@
     <Compile Include="Element.cs" />
     <Compile Include="Error.cs" />
     <Compile Include="History.cs" />
-    <Compile Include="Javascript.cs" />
     <Compile Include="Location.cs" />
     <Compile Include="RequestOptions.cs" />
     <Compile Include="PromptResponse.cs" />

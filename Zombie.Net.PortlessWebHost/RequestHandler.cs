@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using PortlessWebHost;
+using WebCookie = System.Net.Cookie;
 
 namespace Zombie.Net.PortlessWebHost
 {
@@ -19,10 +21,11 @@ namespace Zombie.Net.PortlessWebHost
             this.host = host;
         }
 
-        public void HandleRequest(Request request, Action<Error, Response> callback)
+        public async Task HandleRequest(Request request, Func<Error, Response, Task> callback)
         {
             PortlessWebRequest webRequest = host.CreateRequest(request.Url);
             webRequest.Method = request.Method;
+            await AddHeaders(request, webRequest);
             using (PortlessWebResponse webResponse = webRequest.GetPortlessResponse())
             {
                 Response response = new Response();
@@ -34,7 +37,22 @@ namespace Zombie.Net.PortlessWebHost
                     response.Body = Encoding.Default.GetString(responseBytes);
                 }
 
-                callback(null, response);
+                await callback(null, response);
+            }
+        }
+
+        private async Task AddHeaders(Request request, PortlessWebRequest webRequest)
+        {
+            foreach (KeyValuePair<string, string> header in request.Headers)
+            {
+                webRequest.Headers[header.Key] = header.Value;
+            }
+
+            Cookies cookies = await browser.CookiesAsync(request.Url);
+            Cookie[] allCookies = await cookies.AllAsync();
+            CookieContainer cookieContainer = new CookieContainer();
+            foreach (Cookie cookie in allCookies)
+            {
             }
         }
     }

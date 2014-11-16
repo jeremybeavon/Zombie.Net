@@ -19,10 +19,5 @@ namespace Zombie.Net
         {
             return document == null ? null : new Document(document);
         }
-
-        private static object ExecuteJavascriptFunction(object func, object input)
-        {
-            return Javascript.ExecuteFunction(func, input);
-        }
     }
 }

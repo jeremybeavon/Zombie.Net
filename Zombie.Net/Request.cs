@@ -25,9 +25,13 @@ namespace Zombie.Net
             get { return new Uri(request.url); }
         }
 
-        public object Headers
+        public IReadOnlyDictionary<string, string> Headers
         {
-            get { return request.headers; }
+            get
+            {
+                IDictionary<string, object> headerDictionary = (IDictionary<string, object>)request.headers;
+                return headerDictionary.ToDictionary(header => header.Key, header => (string)header.Value);
+            }
         }
 
         public string Body

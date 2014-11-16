@@ -21,10 +21,5 @@ namespace Zombie.Net
         {
             return element == null ? null : new Element(element);
         }
-
-        private static object ExecuteJavascriptFunction(object func, object input)
-        {
-            return Javascript.ExecuteFunction(func, input);
-        }
     }
 }

@@ -9,19 +9,19 @@ namespace Zombie.Net.PortlessWebHost
 {
     public static class BrowserFactory
     {
-        public static Browser Create(WebHost host)
+        public static Task<Browser> CreateAsync(WebHost host)
         {
             return InitializeBrowser(Browser.Create(), host);
         }
 
-        public static Browser Create(WebHost host, BrowserOptions options)
+        public static Task<Browser> CreateAsync(WebHost host, BrowserOptions options)
         {
             return InitializeBrowser(new Browser(options), host);
         }
 
-        private static Browser InitializeBrowser(Browser browser, WebHost host)
+        private static async Task<Browser> InitializeBrowser(Browser browser, WebHost host)
         {
-            browser.Resources.AddRequestHandler(new RequestHandler(browser, host).HandleRequest);
+            await (await browser.GetResourcesAsync()).AddRequestHandlerAsync(new RequestHandler(browser, host).HandleRequest);
             return browser;
         }
     }

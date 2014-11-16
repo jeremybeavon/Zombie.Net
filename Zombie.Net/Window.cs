@@ -15,24 +15,28 @@ namespace Zombie.Net
             this.window = window;
         }
 
-        public History History
+        public async Task<History> GetHistoryAsync()
         {
-            get { return new History(ExecuteJavascriptFunction(window.history, null)); }
+            return new History(await ExecuteJavascriptFunction(window.history, null));
         }
 
-        public Location Location
+        public async Task<Location> GetLocationAsync()
         {
-            get { return new Location(ExecuteJavascriptFunction(window.location, null)); }
-            set { ExecuteJavascriptFunction(window.setLocation, value.Url); }
+            return new Location(await ExecuteJavascriptFunction(window.location, null));
+        }
+
+        public Task SetLocationAsync(Location location)
+        {
+            return ExecuteJavascriptFunction(window.setLocation, location.Url);
         }
 
         // document
         // name
         // parent
         // top
-        private static object ExecuteJavascriptFunction(object func, object input)
+        private static Task<object> ExecuteJavascriptFunction(object func, object input)
         {
-            return Javascript.ExecuteFunction(func, input);
+            return ((Func<object, Task<object>>)func)(input);
         }
     }
 }

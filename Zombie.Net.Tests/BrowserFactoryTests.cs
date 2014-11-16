@@ -37,11 +37,14 @@ namespace Zombie.Net.Tests
         [RunInDifferentAppDomain]
         public void TestCreate()
         {
-            EdgeJs.NativeModuleSupport.EdgeWithNativeModules.RegisterPreCompiledModules("zombie");
-            Browser browser = BrowserFactory.Create(WebHost.Current);
-            browser.Visit(new Uri("http://localhost.test/Account/Login"));
-            string html = browser.Html();
-            html.Should().Contain("Zombie.Net tests");
+            //EdgeJs.NativeModuleSupport.EdgeWithNativeModules.RegisterPreCompiledModules("zombie");
+            ((Func<Task>)(async () =>
+            {
+                Browser browser = await BrowserFactory.CreateAsync(WebHost.Current);
+                await browser.VisitAsync(new Uri("http://localhost.test/Account/Login"));
+                string html = await browser.HtmlAsync();
+                html.Should().Contain("Zombie.Net tests");
+            }))().Wait();
         }
     }
 }
