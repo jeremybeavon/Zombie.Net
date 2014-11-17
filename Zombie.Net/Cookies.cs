@@ -25,12 +25,6 @@ namespace Zombie.Net
             return ExecuteJavascriptFunction(cookies.set, new { name, value });
         }
 
-        public async Task<Cookie[]> AllAsync()
-        {
-            object allCookies = await ExecuteJavascriptFunction(cookies.all, null);
-            return (Cookie[])allCookies;
-        }
-
         public Task ClearAsync()
         {
             return ExecuteJavascriptFunction(cookies.clear, null);
@@ -44,6 +38,15 @@ namespace Zombie.Net
         public Task RemoveAsync(string name)
         {
             return ExecuteJavascriptFunction(cookies.remove, name);
+        }
+
+        public async Task<string> SerializeAsync(Uri url)
+        {
+            var data = new
+            {
+                domain = url.Host
+            };
+            return (string)(await ExecuteJavascriptFunction(cookies.serialize, data));
         }
         
         private static Task<object> ExecuteJavascriptFunction(object func, object input)

@@ -34,6 +34,11 @@ namespace Zombie.Net
             return Element.Create(await ExecuteJavascriptFunction(browser.body, null));
         }
 
+        public async Task<Cookies> GetCookiesAsync()
+        {
+            return new Cookies(await ExecuteJavascriptFunction(browser.cookies, null));
+        }
+
         public async Task<Document> GetDocumentAsync()
         {
             return Document.Create(await ExecuteJavascriptFunction(browser.document, null));
@@ -117,26 +122,6 @@ namespace Zombie.Net
         public Task CloseAsync()
         {
             return ExecuteJavascriptFunction(browser.close, null);
-        }
-
-        public async Task<Cookies> CookiesAsync()
-        {
-            return new Cookies(await ExecuteJavascriptFunction(browser.cookies, null));
-        }
-
-        public async Task<Cookies> CookiesAsync(string domain)
-        {
-            return new Cookies(await ExecuteJavascriptFunction(browser.cookies, new { domain }));
-        }
-
-        public async Task<Cookies> CookiesAsync(string domain, string path)
-        {
-            return new Cookies(await ExecuteJavascriptFunction(browser.cookies, new { domain, path }));
-        }
-
-        public Task<Cookies> CookiesAsync(Uri url)
-        {
-            return CookiesAsync(url.Host, url.LocalPath);
         }
 
         public Task<object> EvaluateAsync(string javascriptExpression)

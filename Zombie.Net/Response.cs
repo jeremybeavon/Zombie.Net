@@ -14,6 +14,7 @@ namespace Zombie.Net
         public Response()
         {
             response = new ExpandoObject();
+            response.headers = new ExpandoObject();
             StatusCode = 200;
             StatusText = "OK";
         }
@@ -47,10 +48,9 @@ namespace Zombie.Net
             set { response.statusText = value; }
         }
 
-        public object Headers
+        public IDictionary<string, object> Headers
         {
             get { return response.headers; }
-            set { response.headers = value; }
         }
 
         public string Body

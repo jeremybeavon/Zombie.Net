@@ -40,9 +40,15 @@ namespace Zombie.Net.Tests
             //EdgeJs.NativeModuleSupport.EdgeWithNativeModules.RegisterPreCompiledModules("zombie");
             ((Func<Task>)(async () =>
             {
-                Browser browser = await BrowserFactory.CreateAsync(WebHost.Current);
+                BrowserOptions options = new BrowserOptions()
+                {
+                    WaitDuration = TimeSpan.FromMinutes(10)
+                };
+                Browser browser = await BrowserFactory.CreateAsync(WebHost.Current, options);
                 await browser.VisitAsync(new Uri("http://localhost.test/Account/Login"));
                 string html = await browser.HtmlAsync();
+                /*string cookies = await browser.SaveCookiesAsync();
+                string test = cookies;*/
                 html.Should().Contain("Zombie.Net tests");
             }))().Wait();
         }

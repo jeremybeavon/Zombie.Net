@@ -15,6 +15,9 @@ var getCookies = function (currentCookies) {
         get: function (data, callback) {
             callback(null, currentCookies.get(data));
         },
+        serialize: function (data, callback) {
+            callback(null, currentCookies.serialize(data.domain, data.path));
+        },
         set: function (data, callback) {
             currentCookies.set(data.name, data.value);
             callback(null, null);
@@ -254,7 +257,7 @@ var getBrowser = function (browser) {
         },
         cookies: function (data, callback) {
             data = data || {};
-            callback(null, getCookies(browser.cookies(data.domain, data.path)));
+            callback(null, getCookies(browser.cookies));
         },
         document: function (data, callback) {
             callback(null, getDocument(browser.document));

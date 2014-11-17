@@ -12,9 +12,9 @@ namespace Zombie.Net
         {
             Debug = true;
             LoadCss = true;
-            MaxWaitTime = TimeSpan.FromSeconds(5);
             MaxRedirects = 5;
             RunScripts = true;
+            WaitDuration = TimeSpan.FromSeconds(5);
         }
 
         public bool Debug { get; set; }
@@ -22,8 +22,6 @@ namespace Zombie.Net
         public object Headers { get; set; }
 
         public bool LoadCss { get; set; }
-
-        public TimeSpan MaxWaitTime { get; set; }
 
         public int MaxRedirects { get; set; }
 
@@ -37,7 +35,7 @@ namespace Zombie.Net
 
         public Uri BaseUrl { get; set; }
 
-        public TimeSpan WaitFor { get; set; }
+        public TimeSpan WaitDuration { get; set; }
 
         //localAddress
 
@@ -49,12 +47,11 @@ namespace Zombie.Net
                 headers = Headers,
                 loadCss = LoadCss,
                 maxRedirects = MaxRedirects,
-                maxWait = MaxWaitTime.TotalSeconds,
-                proxy = ProxyUrl.AbsoluteUri,
+                proxy = ProxyUrl == null ? null : ProxyUrl.AbsoluteUri,
                 runScripts = RunScripts,
                 silent = Silent,
                 userAgent = UserAgent,
-                waitFor = WaitFor.TotalSeconds
+                waitDuration = string.Concat((int)WaitDuration.TotalSeconds, "s")
             };
         }
     }

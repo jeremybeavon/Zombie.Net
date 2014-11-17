@@ -30,6 +30,7 @@ namespace Zombie.Net.PortlessWebHost
             {
                 Response response = new Response();
                 response.Url = request.Url;
+                AddHeaders(response, webResponse);
                 using (Stream stream = webResponse.GetResponseStream())
                 {
                     byte[] responseBytes = new byte[stream.Length];
@@ -48,11 +49,18 @@ namespace Zombie.Net.PortlessWebHost
                 webRequest.Headers[header.Key] = header.Value;
             }
 
-            Cookies cookies = await browser.CookiesAsync(request.Url);
-            Cookie[] allCookies = await cookies.AllAsync();
-            CookieContainer cookieContainer = new CookieContainer();
-            foreach (Cookie cookie in allCookies)
+            string cookies = await (await browser.GetCookiesAsync()).SerializeAsync(request.Url);
+            if (!string.IsNullOrWhiteSpace(cookies))
             {
+                webRequest.Headers[HttpRequestHeader.Cookie] = cookies;
+            }
+        }
+
+        private void AddHeaders(Response response, PortlessWebResponse webResponse)
+        {
+            foreach (string headerName in webResponse.Headers.Keys)
+            {
+                response.Headers[headerName.ToLower()] = webResponse.Headers[headerName];
             }
         }
     }
