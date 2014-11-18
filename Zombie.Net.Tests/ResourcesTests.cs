@@ -8,7 +8,7 @@ namespace Zombie.Net.Tests
     [TestClass]
     public sealed class ResourcesTests
     {
-        [TestMethod]
+        /*[TestMethod]
         public async Task TestAddRequestHander()
         {
             Browser browser = Browser.Create();
@@ -22,6 +22,6 @@ namespace Zombie.Net.Tests
             await browser.VisitAsync(new Uri("http://localhost:51802/Account/Login"));
             //browser.VisitTestPage();
             callCount.Should().BeGreaterThan(0);
-        }
+        }*/
     }
 }

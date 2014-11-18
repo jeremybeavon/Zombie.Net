@@ -21,7 +21,7 @@ namespace Zombie.Net.Tests
         public void SetUp()
         {
             string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            string physicalPath = Path.Combine(baseDirectory, @"..\..\..\Zombie.Net.TestWebSite");
+            string physicalPath = Path.Combine(baseDirectory, @"..\..\..\Zombie.Net.TestWebSite\");
             host = new WebHost("/", Path.GetFullPath(physicalPath));
             DefaultAppDomainProvider.AppDomain = host.Domain;
         }
