@@ -8,25 +8,29 @@ namespace Zombie.Net.Tests
     [TestClass]
     public class BrowserTests
     {
-
-
         [TestMethod]
-        public async Task TestOnAlertCallsCallback()
+        public void TestOnAlertCallsCallback()
         {
-            Browser browser = Browser.Create();
-            await browser.VisitTestPage();
-            string html = await browser.HtmlAsync();
-            int statusCode = await browser.GetStatusCodeAsync();
-            bool isAlertCallbackCalled = false;
-            Func<string, Task> callback = input => 
+            ((Func<Task>)(async () =>
             {
-                input.Should().Be("test alert message");
-                isAlertCallbackCalled = true;
-                return Task.FromResult<object>(null);
-            };
-            await browser.OnAlertAsync(callback);
-            await browser.PressButtonAsync("Display Alert");
-            isAlertCallbackCalled.Should().BeTrue();
+                // Act
+                Browser browser = Browser.Create();
+                await browser.VisitTestPage();
+                string html = await browser.HtmlAsync();
+                int statusCode = await browser.GetStatusCodeAsync();
+                string alertMessage = string.Empty;
+                Func<string, Task> callback = input =>
+                {
+                    alertMessage = input;
+                    return Task.FromResult<object>(null);
+                };
+                await browser.OnAlertAsync(callback);
+                await browser.PressButtonAsync("Display Alert");
+
+                // Assert
+                statusCode.Should().Be(200);
+                alertMessage.Should().Be("test alert message");
+            }))().Wait();
         }
     }
 }
