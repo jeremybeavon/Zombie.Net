@@ -31,17 +31,6 @@ var getCookies = function (currentCookies) {
 var getDocument = function (currentDocument) {
     return {};
 };
-var getElement = function (currentElement) {
-    return {};
-};
-var getElements = function (elements) {
-    var newElements = [];
-    for (var index = 0; index < elements.length; index++) {
-        newElements.push(getElement(elements[index]));
-    }
-
-    return newElements;
-};
 var getHistory = function (currentHistory) {
     return {
         back: function (data, callback) {
@@ -219,6 +208,28 @@ var getWindow = function (currentWindow) {
     };
 };
 var getBrowser = function (browser) {
+    var getElement = function (currentElement) {
+        //$element = browser.window.$(currentElement);
+        return {
+            html: function (data, callback) {
+                callback(null, browser.window.$(currentElement).html());
+            },
+            text: function (data, callback) {
+                callback(null, browser.window.$(currentElement).text());
+            },
+            val: function (data, callback) {
+                callback(null, browser.window.$(currentElement).val());
+            }
+        };
+    };
+    var getElements = function (elements) {
+        var newElements = [];
+        for (var index = 0; index < elements.length; index++) {
+            newElements.push(getElement(elements[index]));
+        }
+
+        return newElements;
+    };
     return {
         attach: function (data, callback) {
             browser.attach(data.selector, data.filename, function () {
@@ -237,14 +248,12 @@ var getBrowser = function (browser) {
             callback(null, getElement(browser.button(data)));
         },
         check: function (data, callback) {
-            browser.check(data, function () {
-                callback(null, null);
-            });
+            browser.check(data);
+            callback(null, null);
         },
         choose: function (data, callback) {
-            browser.choose(data, function () {
-                callback(null, null);
-            });
+            browser.choose(data);
+            callback(null, null);
         },
         clickLink: function (data, callback) {
             browser.clickLink(data, function () {
@@ -269,9 +278,8 @@ var getBrowser = function (browser) {
             callback(null, getElement(browser.field(data)));
         },
         fill: function (data, callback) {
-            browser.fill(data.field, data.value, function () {
-                callback(null, null);
-            });
+            browser.fill(data.field, data.value);
+            callback(null, null);
         },
         focused: function (data, callback) {
             callback(null, getElement(browser.focused));
@@ -366,9 +374,8 @@ var getBrowser = function (browser) {
             callback(null, browser.saveStorage());
         },
         select: function (data, callback) {
-            browser.select(data.field, data.value, function () {
-                callback(null, null);
-            });
+            browser.select(data.field, data.value);
+            callback(null, null);
         },
         sessionStorage: function (data, callback) {
             callback(null, getStorage(browser.sessionStorage(data)));
@@ -387,21 +394,19 @@ var getBrowser = function (browser) {
             callback(null, browser.text(data.selector));
         },
         uncheck: function (data, callback) {
-            browser.uncheck(data, function () {
-                callback(null, null);
-            });
+            browser.uncheck(data);
+            callback(null, null);
         },
         unselect: function (data, callback) {
-            browser.unselect(data.field, data.value, function () {
-                callback(null, null);
-            });
+            browser.unselect(data.field, data.value);
+            callback(null, null);
         },
         url: function (data, callback) {
             callback(null, browser.url);
         },
         visit: function (data, callback) {
-            browser.visit(data.url, data.options || {}, function (error) {
-                callback(null, error);
+            browser.visit(data.url, data.options || {}, function (error, browser, status) {
+                callback(null, { error: error, status: status });
             });
         },
         wait: function (data, callback) {

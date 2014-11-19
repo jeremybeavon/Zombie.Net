@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AppDomainAspects;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PortlessWebHost;
@@ -23,34 +22,30 @@ namespace Zombie.Net.Tests
             string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
             string physicalPath = Path.Combine(baseDirectory, @"..\..\..\Zombie.Net.TestWebSite\");
             host = new WebHost("/", Path.GetFullPath(physicalPath));
-            DefaultAppDomainProvider.AppDomain = host.Domain;
         }
 
         [TestCleanup]
         public void CleanUp()
         {
-            DefaultAppDomainProvider.AppDomain = null;
             host.Dispose();
         }
 
         [TestMethod]
-        [RunInDifferentAppDomain]
-        public void TestCreate()
+        public async Task TestCreate()
         {
             //EdgeJs.NativeModuleSupport.EdgeWithNativeModules.RegisterPreCompiledModules("zombie");
-            ((Func<Task>)(async () =>
+            BrowserOptions options = new BrowserOptions()
             {
-                BrowserOptions options = new BrowserOptions()
-                {
-                    WaitDuration = TimeSpan.FromMinutes(10)
-                };
-                Browser browser = await BrowserFactory.CreateAsync(WebHost.Current, options);
+                WaitDuration = TimeSpan.FromMinutes(10)
+            };
+            using (Browser browser = await BrowserFactory.CreateAsync(host, options))
+            {
                 await browser.VisitAsync(new Uri("http://localhost.test/Account/Login"));
                 string html = await browser.HtmlAsync();
                 /*string cookies = await browser.SaveCookiesAsync();
                 string test = cookies;*/
                 html.Should().Contain("Zombie.Net tests");
-            }))().Wait();
+            }
         }
     }
 }

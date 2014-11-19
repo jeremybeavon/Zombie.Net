@@ -9,12 +9,11 @@ namespace Zombie.Net.Tests
     public class BrowserTests
     {
         [TestMethod]
-        public void TestOnAlertCallsCallback()
+        public async Task TestOnAlertCallsCallback()
         {
-            ((Func<Task>)(async () =>
+            using (Browser browser = Browser.Create())
             {
                 // Act
-                Browser browser = Browser.Create();
                 await browser.VisitTestPage();
                 string html = await browser.HtmlAsync();
                 int statusCode = await browser.GetStatusCodeAsync();
@@ -30,7 +29,35 @@ namespace Zombie.Net.Tests
                 // Assert
                 statusCode.Should().Be(200);
                 alertMessage.Should().Be("test alert message");
-            }))().Wait();
+            }
+        }
+
+        [TestMethod]
+        public async Task TestFillWithValidInput()
+        {
+            using (Browser browser = Browser.Create())
+            {
+                // Act
+                await browser.VisitTestPage();
+                await browser.FillAsync("userName", "TestUser");
+
+                // Assert
+                Element input = await browser.FieldAsync("userName");
+                string value = await input.ValAsync();
+                value.Should().Be("TestUser");
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(Exception))]
+        public async Task TestFillWithNonExistentInput()
+        {
+            using (Browser browser = Browser.Create())
+            {
+                // Act
+                await browser.VisitTestPage();
+                await browser.FillAsync("userName2", "TestUser");
+            }
         }
     }
 }

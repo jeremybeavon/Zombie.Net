@@ -16,7 +16,6 @@
     <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
     <IsCodedUITest>False</IsCodedUITest>
     <TestProjectType>UnitTest</TestProjectType>
-    <DontImportPostSharp>True</DontImportPostSharp>
     <NuGetPackageImportStamp>0a646df9</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -38,9 +37,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AppDomainAspects">
-      <HintPath>..\packages\AppDomainAspects.1.0.0\lib\AppDomainAspects.dll</HintPath>
-    </Reference>
     <Reference Include="AppDomainCallbackExtensions">
       <HintPath>..\packages\AppDomainCallbackExtensions.1.0.4\lib\net40\AppDomainCallbackExtensions.dll</HintPath>
     </Reference>
@@ -78,10 +74,6 @@
     </Reference>
     <Reference Include="PortlessWebHost">
       <HintPath>..\packages\PortlessWebHost.1.0.5\lib\PortlessWebHost.dll</HintPath>
-    </Reference>
-    <Reference Include="PostSharp, Version=4.0.35.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\PostSharp.4.0.35\lib\net35-client\PostSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -168,15 +160,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="readme.txt" />
-    <Content Include="Website\default.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Website\default.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Website\jquery-2.1.1.min.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Website\default.html" />
+    <Content Include="Website\default.js" />
+    <Content Include="Website\jquery-2.1.1.min.js" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Website.resx">
@@ -205,11 +191,6 @@
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="App_Build\node_modules.targets" />
-  <Import Project="..\packages\PostSharp.4.0.35\tools\PostSharp.targets" Condition="Exists('..\packages\PostSharp.4.0.35\tools\PostSharp.targets')" />
-  <Target Name="EnsurePostSharpImported" BeforeTargets="BeforeBuild" Condition="'$(PostSharp30Imported)' == ''">
-    <Error Condition="!Exists('..\packages\PostSharp.4.0.35\tools\PostSharp.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://www.postsharp.net/links/nuget-restore." />
-    <Error Condition="Exists('..\packages\PostSharp.4.0.35\tools\PostSharp.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://www.postsharp.net/links/nuget-restore." />
-  </Target>
   <Import Project="..\packages\Ncapsulate.Node.0.10.28\build\Ncapsulate.Node.targets" Condition="Exists('..\packages\Ncapsulate.Node.0.10.28\build\Ncapsulate.Node.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

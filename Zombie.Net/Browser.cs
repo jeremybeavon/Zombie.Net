@@ -8,7 +8,7 @@ using Zombie.Net.Properties;
 
 namespace Zombie.Net
 {
-    public sealed class Browser
+    public sealed class Browser : IDisposable
     {
         private static readonly object initializeLock = new object();
         private static Func<object, Task<object>> browserFactoryFunc;
@@ -336,6 +336,11 @@ namespace Zombie.Net
             Task<object> createTask = browserFactoryFunc(options);
             createTask.Wait();
             return createTask.Result;
+        }
+
+        public void Dispose()
+        {
+            CloseAsync().Wait();
         }
     }
 }
