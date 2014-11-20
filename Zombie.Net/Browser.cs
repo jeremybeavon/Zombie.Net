@@ -333,7 +333,12 @@ namespace Zombie.Net
                 }
             }
 
-            Task<object> createTask = browserFactoryFunc(options);
+            Func<object, Task<object>> log = input =>
+            {
+                Console.WriteLine((string)input);
+                return Task.FromResult<object>(null);
+            };
+            Task<object> createTask = browserFactoryFunc(new { options, log });
             createTask.Wait();
             return createTask.Result;
         }

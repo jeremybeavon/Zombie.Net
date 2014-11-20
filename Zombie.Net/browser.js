@@ -1,4 +1,5 @@
 ﻿var Browser = require('zombie');
+Browser.debug();
 var getCookies = function (currentCookies) {
     return {
         all: function (data, callback) {
@@ -430,5 +431,9 @@ var getBrowser = function (browser) {
     };
 };
 var browserFactory = function (data, callback) {
-    callback(null, getBrowser(data ? new Browser(data) : Browser.create()));
+    var browser = data.options ? new Browser(data.options) : Browser.create();
+    browser.on("log", function (log) {
+        data.log(log, null);
+    });
+    callback(null, getBrowser(browser));
 };

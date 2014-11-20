@@ -61,6 +61,66 @@ namespace Zombie.Net.Tests {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to /**
+        /// * @license AngularJS v1.3.2
+        /// * (c) 2010-2014 Google, Inc. http://angularjs.org
+        /// * License: MIT
+        /// */
+        ///(function(window, document, undefined) {&apos;use strict&apos;;
+        ///
+        ////**
+        /// * @description
+        /// *
+        /// * This object provides a utility for producing rich Error messages within
+        /// * Angular. It can be called as follows:
+        /// *
+        /// * var exampleMinErr = minErr(&apos;example&apos;);
+        /// * throw exampleMinErr(&apos;one&apos;, &apos;This {0} is {1}&apos;, foo, bar);
+        /// *
+        /// * The above creates an instance of minErr in the example namespace. The
+        /// * resulting error will have a na [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string AngularJs {
+            get {
+                return ResourceManager.GetString("AngularJs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;!DOCTYPE html&gt;
+        ///
+        ///&lt;html lang=&quot;en&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+        ///&lt;head&gt;
+        ///    &lt;meta charset=&quot;utf-8&quot; /&gt;
+        ///    &lt;title&gt;&lt;/title&gt;
+        ///&lt;/head&gt;
+        ///&lt;body ng-app=&quot;testApp&quot;&gt;
+        ///    &lt;div ng-controller=&quot;testController&quot;&gt;
+        ///        {{test}}
+        ///    &lt;/div&gt;
+        ///
+        ///    &lt;script type=&quot;text/javascript&quot; src=&quot;angular.js&quot;&gt;&lt;/script&gt;
+        ///    &lt;script type=&quot;text/javascript&quot; src=&quot;angular_test.js&quot;&gt;&lt;/script&gt;
+        ///&lt;/body&gt;
+        ///&lt;/html&gt;.
+        /// </summary>
+        internal static string AngularTestHtml {
+            get {
+                return ResourceManager.GetString("AngularTestHtml", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to angular.module(&quot;testApp&quot;, []).controller(&quot;testController&quot;, function ($scope) { $scope.test = &quot;This is a test&quot;; });
+        ///.
+        /// </summary>
+        internal static string AngularTestJs {
+            get {
+                return ResourceManager.GetString("AngularTestJs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;!DOCTYPE html&gt;
         ///&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
         ///&lt;head&gt;
@@ -68,6 +128,9 @@ namespace Zombie.Net.Tests {
         ///&lt;/head&gt;
         ///&lt;body&gt;
         ///    &lt;button id=&quot;displayAlert&quot;&gt;Display Alert&lt;/button&gt;
+        ///    &lt;p&gt;
+        ///        &lt;input name=&quot;userName&quot; class=&quot;userName&quot; type=&quot;text&quot; /&gt;
+        ///    &lt;/p&gt;
         ///    &lt;script type=&quot;text/javascript&quot; src=&quot;jquery-2.1.1.min.js&quot;&gt;&lt;/script&gt;
         ///    &lt;script type=&quot;text/javascript&quot; src=&quot;default.js&quot;&gt;&lt;/script&gt;
         ///&lt;/body&gt;

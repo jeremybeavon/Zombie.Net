@@ -59,5 +59,23 @@ namespace Zombie.Net.Tests
                 await browser.FillAsync("userName2", "TestUser");
             }
         }
+
+        [TestMethod]
+        public async Task TestVisitWithAngularJs()
+        {
+            using (Browser browser = Browser.Create())
+            {
+                // Act
+                Resources resources = await browser.GetResourcesAsync();
+                await resources.MockAsync(new Uri("http://test/angular_test.html"), new Response(Website.AngularTestHtml));
+                await resources.MockAsync(new Uri("http://test/angular.js"), new Response(Website.AngularJs));
+                await resources.MockAsync(new Uri("http://test/angular_test.js"), new Response(Website.AngularTestJs));
+                await browser.VisitAsync(new Uri("http://test/angular_test.html"));
+                
+                // Assert
+                string text = await browser.TextAsync("div");
+                text.Should().Be("This is a test");
+            }
+        }
     }
 }

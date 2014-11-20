@@ -35,7 +35,7 @@ namespace Zombie.Net.PortlessWebHost
                 {
                     byte[] responseBytes = new byte[stream.Length];
                     stream.Read(responseBytes, 0, (int)stream.Length);
-                    response.Body = Encoding.Default.GetString(responseBytes);
+                    response.Body = Encoding.UTF8.GetString(responseBytes);
                 }
 
                 await callback(null, response);

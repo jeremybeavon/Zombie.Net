@@ -14,20 +14,26 @@ namespace Zombie.Net.Tests
     [TestClass]
     public sealed class BrowserFactoryTests
     {
-        private WebHost host;
+        private static WebHost host;
+        private static WebHost simpleHost;
 
-        [TestInitialize]
-        public void SetUp()
+        [ClassInitialize]
+        public static void SetUp(TestContext context)
         {
             string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
             string physicalPath = Path.Combine(baseDirectory, @"..\..\..\Zombie.Net.TestWebSite\");
             host = new WebHost("/", Path.GetFullPath(physicalPath));
+            physicalPath = Path.Combine(baseDirectory, @"..\..\Website\");
+            simpleHost = new WebHost("/", Path.GetFullPath(physicalPath));
         }
 
-        [TestCleanup]
-        public void CleanUp()
+        [ClassCleanup]
+        public static void CleanUp()
         {
             host.Dispose();
+            simpleHost.Dispose();
+            host = null;
+            simpleHost = null;
         }
 
         [TestMethod]
@@ -45,6 +51,21 @@ namespace Zombie.Net.Tests
                 /*string cookies = await browser.SaveCookiesAsync();
                 string test = cookies;*/
                 html.Should().Contain("Zombie.Net tests");
+            }
+        }
+
+        [TestMethod]
+        public async Task TestCreateWithAngularJs()
+        {
+            EdgeJs.NativeModuleSupport.EdgeWithNativeModules.RegisterPreCompiledModules("zombie");
+            using (Browser browser = await BrowserFactory.CreateAsync(simpleHost))
+            {
+                // Act
+                await browser.VisitAsync(new Uri("http://test/angular_test.html"));
+
+                // Assert
+                string text = await browser.TextAsync("div");
+                text.Should().Be("This is a test");
             }
         }
     }
