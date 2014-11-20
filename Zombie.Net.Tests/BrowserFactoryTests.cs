@@ -57,7 +57,6 @@ namespace Zombie.Net.Tests
         [TestMethod]
         public async Task TestCreateWithAngularJs()
         {
-            EdgeJs.NativeModuleSupport.EdgeWithNativeModules.RegisterPreCompiledModules("zombie");
             using (Browser browser = await BrowserFactory.CreateAsync(simpleHost))
             {
                 // Act
