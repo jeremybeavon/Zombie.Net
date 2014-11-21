@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -335,7 +336,7 @@ namespace Zombie.Net
 
             Func<object, Task<object>> log = input =>
             {
-                Console.WriteLine((string)input);
+                Trace.WriteLine((string)input);
                 return Task.FromResult<object>(null);
             };
             Task<object> createTask = browserFactoryFunc(new { options, log });
