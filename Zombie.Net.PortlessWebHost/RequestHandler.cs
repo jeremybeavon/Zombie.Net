@@ -26,6 +26,7 @@ namespace Zombie.Net.PortlessWebHost
             PortlessWebRequest webRequest = host.CreateRequest(request.Url);
             webRequest.Method = request.Method;
             await AddHeaders(request, webRequest);
+            AddBody(request, webRequest);
             using (PortlessWebResponse webResponse = webRequest.GetPortlessResponse())
             {
                 Response response = new Response();
@@ -53,6 +54,25 @@ namespace Zombie.Net.PortlessWebHost
             if (!string.IsNullOrWhiteSpace(cookies))
             {
                 webRequest.Headers[HttpRequestHeader.Cookie] = cookies;
+            }
+
+            if (request.Body != null)
+            {
+                webRequest.Headers[HttpRequestHeader.ContentLength] = request.Body.Length.ToString();
+            }
+        }
+
+        private void AddBody(Request request, PortlessWebRequest webRequest)
+        {
+            if (request.Body != null)
+            {
+                using (Stream requestStream = webRequest.GetRequestStream())
+                {
+                    using (TextWriter requestWriter = new StreamWriter(requestStream))
+                    {
+                        requestWriter.Write(request.Body);
+                    }
+                }
             }
         }
 

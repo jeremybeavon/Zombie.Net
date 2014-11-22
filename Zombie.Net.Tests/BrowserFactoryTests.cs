@@ -67,5 +67,21 @@ namespace Zombie.Net.Tests
                 text.Should().Be("This is a test");
             }
         }
+
+        [TestMethod]
+        public async Task TestPressButtonWithJQuery()
+        {
+            using (Browser browser = await BrowserFactory.CreateAsync(host))
+            {
+                // Act
+                await browser.VisitAsync(new Uri("http://test/testpost.html"));
+                await browser.FillAsync("#hometown", "Whakatane");
+                await browser.PressButtonAsync("#testPost");
+
+                // Assert
+                string text = await browser.TextAsync("#result");
+                text.Should().Be("Hometown = Whakatane in da house");
+            }
+        }
     }
 }
