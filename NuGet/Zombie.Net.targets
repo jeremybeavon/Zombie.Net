@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <NodeDirectory>$(MSBuildThisFileDirectory)..\..\Ncapsulate.Node.0.10.28\nodejs\</NodeDirectory>
+    <NpmJsFile>$(NodeDirectory)node_modules\npm\bin\npm-cli.js</NpmJsFile>
+    <NewNpmJsFile>$(ProjectDir)edge\node_modules\npm\bin\npm-cli.js</NewNpmJsFile>
+  </PropertyGroup>
+  <Target Name="ZombieNet" AfterTargets="AfterBuild">
+    <ItemGroup>
+      <ZombieNetFiles Include="$(ProjectDir)edge\node_modules\zombie\**\*.*"/>
+    </ItemGroup>
+    <MakeDir Directories="$(TargetDir)edge" />
+    <Copy SourceFiles="@(ZombieNetFiles)"
+          DestinationFolder="$(TargetDir)edge\node_modules\node-gyp\%(RecursiveDir)"
+          Condition="Exists('$(ProjectDir)edge\node_modules\node-gyp')" />
+    <Exec Command="&quot;$(NodeDirectory)node.exe&quot; &quot;$(NpmJsFile)&quot; install npm"
+          WorkingDirectory="$(ProjectDir)edge"
+          Condition="!Exists('$(TargetDir)edge\node_modules\zombie')"/>
+    <Exec Command="&quot;$(NodeDirectory)node.exe&quot; &quot;$(NpmJsFile)&quot; install zombie"
+          WorkingDirectory="$(TargetDir)edge"
+          Condition="!Exists('$(TargetDir)edge\node_modules\zombie')"/>
+  </Target>
+</Project>
