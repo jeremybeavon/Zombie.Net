@@ -6,18 +6,17 @@
     <NewNpmJsFile>$(ProjectDir)edge\node_modules\npm\bin\npm-cli.js</NewNpmJsFile>
   </PropertyGroup>
   <Target Name="ZombieNet" AfterTargets="AfterBuild">
+    <MakeDir Directories="$(TargetDir)edge" />
+    <Exec Command="&quot;$(NodeDirectory)node.exe&quot; &quot;$(NpmJsFile)&quot; install npm"
+          WorkingDirectory="$(ProjectDir)edge"
+          Condition="!Exists('$(ProjectDir)edge\node_modules\zombie')"/>
+    <Exec Command="&quot;$(NodeDirectory)node.exe&quot; &quot;$(NpmJsFile)&quot; install zombie"
+          WorkingDirectory="$(ProjectDir)edge"
+          Condition="!Exists('$(ProjectDir)edge\node_modules\zombie')"/>
     <ItemGroup>
       <ZombieNetFiles Include="$(ProjectDir)edge\node_modules\zombie\**\*.*"/>
     </ItemGroup>
-    <MakeDir Directories="$(TargetDir)edge" />
     <Copy SourceFiles="@(ZombieNetFiles)"
-          DestinationFolder="$(TargetDir)edge\node_modules\node-gyp\%(RecursiveDir)"
-          Condition="Exists('$(ProjectDir)edge\node_modules\node-gyp')" />
-    <Exec Command="&quot;$(NodeDirectory)node.exe&quot; &quot;$(NpmJsFile)&quot; install npm"
-          WorkingDirectory="$(ProjectDir)edge"
-          Condition="!Exists('$(TargetDir)edge\node_modules\zombie')"/>
-    <Exec Command="&quot;$(NodeDirectory)node.exe&quot; &quot;$(NpmJsFile)&quot; install zombie"
-          WorkingDirectory="$(TargetDir)edge"
-          Condition="!Exists('$(TargetDir)edge\node_modules\zombie')"/>
+          DestinationFolder="$(TargetDir)edge\node_modules\node-gyp\%(RecursiveDir)" />
   </Target>
 </Project>
