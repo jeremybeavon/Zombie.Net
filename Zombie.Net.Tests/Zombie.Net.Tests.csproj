@@ -16,7 +16,7 @@
     <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
     <IsCodedUITest>False</IsCodedUITest>
     <TestProjectType>UnitTest</TestProjectType>
-    <NuGetPackageImportStamp>0a646df9</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>9996839a</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -52,7 +52,7 @@
     </Reference>
     <Reference Include="EdgeJs.NativeModuleSupport, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EdgeJs.NativeModuleSupport.0.9.2.2\lib\net45\EdgeJs.NativeModuleSupport.dll</HintPath>
+      <HintPath>..\packages\EdgeJs.NativeModuleSupport.0.9.2.5\lib\net45\EdgeJs.NativeModuleSupport.dll</HintPath>
     </Reference>
     <Reference Include="FiddlerCore4">
       <HintPath>..\packages\FiddlerCore.4.4.8.4\lib\net40\FiddlerCore4.dll</HintPath>
@@ -72,8 +72,9 @@
     <Reference Include="Ncapsulate.Node">
       <HintPath>..\packages\Ncapsulate.Node.0.10.28\lib\net45\Ncapsulate.Node.dll</HintPath>
     </Reference>
-    <Reference Include="PortlessWebHost">
-      <HintPath>..\packages\PortlessWebHost.1.0.5\lib\PortlessWebHost.dll</HintPath>
+    <Reference Include="PortlessWebHost, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\PortlessWebHost.1.0.9\lib\PortlessWebHost.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -200,9 +201,9 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Ncapsulate.Node.0.10.28\build\Ncapsulate.Node.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Ncapsulate.Node.0.10.28\build\Ncapsulate.Node.targets'))" />
-    <Error Condition="!Exists('..\packages\EdgeJs.NativeModuleSupport.0.9.2.2\build\EdgeJs.NativeModuleSupport.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EdgeJs.NativeModuleSupport.0.9.2.2\build\EdgeJs.NativeModuleSupport.targets'))" />
+    <Error Condition="!Exists('..\packages\EdgeJs.NativeModuleSupport.0.9.2.5\build\EdgeJs.NativeModuleSupport.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EdgeJs.NativeModuleSupport.0.9.2.5\build\EdgeJs.NativeModuleSupport.targets'))" />
   </Target>
-  <Import Project="..\packages\EdgeJs.NativeModuleSupport.0.9.2.2\build\EdgeJs.NativeModuleSupport.targets" Condition="Exists('..\packages\EdgeJs.NativeModuleSupport.0.9.2.2\build\EdgeJs.NativeModuleSupport.targets')" />
+  <Import Project="..\packages\EdgeJs.NativeModuleSupport.0.9.2.5\build\EdgeJs.NativeModuleSupport.targets" Condition="Exists('..\packages\EdgeJs.NativeModuleSupport.0.9.2.5\build\EdgeJs.NativeModuleSupport.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

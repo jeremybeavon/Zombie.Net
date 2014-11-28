@@ -45,8 +45,9 @@
     <Reference Include="FluentSharp.CoreLib">
       <HintPath>..\packages\FluentSharp.CoreLib.5.5.172\lib\net35\FluentSharp.CoreLib.dll</HintPath>
     </Reference>
-    <Reference Include="PortlessWebHost">
-      <HintPath>..\packages\PortlessWebHost.1.0.5\lib\PortlessWebHost.dll</HintPath>
+    <Reference Include="PortlessWebHost, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\PortlessWebHost.1.0.9\lib\PortlessWebHost.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
